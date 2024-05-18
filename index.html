@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <meta property="og:title" content="Flexible Motion In-betweening with Diffusion Models" />
+    <meta property="og:url" content="https://setarehc.github.io/CondMDI/" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+
+    <title>Flexible Motion In-betweening with Diffusion Models</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQ3PYPGJRH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-PQ3PYPGJRH');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link rel="icon" href="static/figures/img_2.png">
+
+    <link rel="stylesheet" href="static/css/bulma.min.css">
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="static/css/index.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/bulma-slider.min.js"></script>
+    <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+
+    <section class="publication-header">
+        <div class="hero-body">
+            <div class="container is-max-widescreen">
+                <!-- <div class="columns is-centered"> -->
+                <div class="column has-text-centered">
+                    <h1 class="title is-2 publication-title">Flexible Motion In-betweening with Diffusion Models</h1>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="publication-author-block">
+
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <!--
+                    to anonimyze:
+                    1. remove author names (till "..indicates equal...")
+                    2. change link to video.
+                    3. remove bibtex reference.
+-->
+                        <div class="column has-text-centered">
+                            <div class="is-size-4 publication-authors">
+                                <span class="author-block">[SIGGRAPH 2024]</span>
+                            </div>
+                        </div>
+
+                        <div class="column has-text-centered">
+                            <div class="is-size-5 publication-authors">
+                                <span class="author-block">
+                                    <a href="https://setarehc.github.io/" target="_blank">Setareh Cohan</a><sup>1</sup>,
+                                    <a href="https://guytevet.github.io/" target="_blank">Guy Tevet</a><sup>2</sup>,
+                                    <a href="https://rdednl.github.io/" target="_blank">Daniele Reda</a><sup>1</sup>,
+                                    <br />
+                                    <a href="https://xbpeng.github.io/" target="_blank">Xue Bin Peng</a><sup>3,4</sup>,
+                                    <a href="https://www.cs.ubc.ca/~van/" target="_blank">Michiel van de
+                                        Panne</a><sup>1</sup>
+                            </div>
+                        </div>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>University of British Columbia,</span>
+                            <span class="author-block"><sup>2</sup>Tel-Aviv University,</span>
+                            <span class="author-block"><sup>3</sup>Simon Fraser University,</span>
+                            <span class="author-block"><sup>4</sup>NVIDIA</span>
+                        </div>
+
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <span class="link-block">
+                                    <!--a href="https://arxiv.org/abs/2302.05905" target="_blank"
+                   class="external-link button is-normal is-rounded">-->
+                                    <a href="paper.pdf" target="_blank"
+                                        class="external-link button is-normal is-rounded">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>Paper</span>
+                                    </a>
+                                </span>
+
+                                <span class="link-block">
+                                    <a href="https://github.com/setarehc/diffusion-motion-inbetweening" target="_blank"
+                                        class="external-link button is-normal is-rounded">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>Code</span>
+                                    </a>
+                                </span>
+
+                                <span class="link-block">
+                                    <a href="https://youtu.be/rRgeOXOVzGQ?si=MubBx1bkGrQX94Qc" target="_blank"
+                                        class="external-link button is-normal is-rounded">
+                                        <span class="icon">
+                                            <i class="fab fa-youtube"></i>
+                                        </span>
+                                        <span>Video</span>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero teaser">
+        <div class="container is-max-desktop">
+            <div class="hero-body">
+                <div class="column is-centered has-text-centered">
+                    <img src="static/figures/walk_keyframes_shorter.png" alt="teaser-fig1" width="38%" />
+                    <img src="static/figures/throw_shorter.png" alt="teaser-fig2" width="30%" />
+                    <img src="static/figures/diversity.png" alt="teaser-fig3" width="27%" />
+                </div>
+                <h2 class="subtitle has-text-centered">
+                    <!--<span class="sin-mdm">SinMDM</span>-->
+                    Our model, CondMDI, is a simple unified model capable of generating precise and diverse motions that
+                    conform to a flexible range of user-specified spatial constraints, as well as text descriptions.
+                    From letf to right: motion conditioned on sparse keyframes; motion conditioned on root trajectory
+                    and a "throwing" prompt; diverse motions generated for the same keyframes.
+                </h2>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section hero is-light">
+        <div class="container is-max-desktop">
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <div class="item">
+                        <p style="margin-bottom: 30px">
+                            <iframe width="720" height="405"
+                                src="https://youtube.com/embed/rRgeOXOVzGQ?si=OeBZrEZZnNLyvZ-t"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </p>
+                    </div>
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            Motion in-betweening, a fundamental task in character animation, consists of generating
+                            motion sequences that plausibly interpolate user-provided keyframe constraints. It has long
+                            been recognized as a labor-intensive and challenging process. We investigate the potential
+                            of diffusion models in generating diverse human motions guided by keyframes. Unlike previous
+                            inbetweening methods, we propose a simple unified model capable of generating precise and
+                            diverse motions that conform to a flexible range of user-specified spatial constraints, as
+                            well as text conditioning. To this end, we propose Conditional Motion Diffusion
+                            In-betweening (CondMDI) which allows for arbitrary dense-or-sparse keyframe placement and
+                            partial keyframe constraints while generating high-quality motions that are diverse and
+                            coherent with the given keyframes. We evaluate the performance of CondMDI on the
+                            text-conditioned HumanML3D dataset and demonstrate the versatility and efficacy of diffusion
+                            models for keyframe in-betweening. We further explore the use of guidance and
+                            imputation-based approaches for inference-time keyframing and compare CondMDI against these
+                            methods.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section hero">
+        <div class="container is-max-desktop">
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered">
+
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">CondMDI Overview</h2>
+                    <div class="content has-text-justified">
+
+                        <p>
+                            When performing motion keyframing, our goal is to produce realistic motions that adhere to a
+                            set of spatio-temporarily sparse input keyframes while maintaining coherence between these
+                            observed keyframes and the entirety of the generated motion sequence. We use a diffusion
+                            model for generating the motions. To condition the model on keyframes, we use a simple and
+                            effective approach: replace the noisy input motion with the given keyframes over the
+                            provided frames, and concatenate the observation mask to further inform the model of the
+                            keyframe locations. Our model is then trained on randomly sampled keyframes with randomly
+                            sampled joints, together with a mask that indicates the observed keyframes and
+                            features. This then offers significant flexibility in terms of number of keyframes and their
+                            placement in time, as well as partial keyframes, i.e., providing information for a subset of
+                            the joints.
+                        </p>
+                        <div class="large-image-container">
+                            <img src="static/figures/overview.jpg" alt="framework overview" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Examples -->
+    <section class="hero is-small is-light">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="column is-centered has-text-centered">
+                    <h2 class="title is-3">Sparse Keyframes</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            Generated motions are high-quality given sparse keyframes placed 5, 10, or 20 frames apart.
+                        </p>
+                    </div>
+
+                    <div class="columns is-centered">
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="100%">
+                                <source src="static/videos/sparse_T=5.mp4" type="video/mp4">
+                            </video>
+                            <p>Keyframes every 5 frames</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="100%">
+                                <source src="static/videos/sparse_T=10.mp4" type="video/mp4">
+                            </video>
+                            <p>Keyframes every 10 frames</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="100%">
+                                <source src="static/videos/sparse_T=20.mp4" type="video/mp4">
+                            </video>
+                            <p>Keyframes every 20 frames</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-centered has-text-centered">
+                    <div class="content has-text-justified">
+                        <p>
+                            Generated results are still high-quality when keyframes are placed more sparsely.
+                        </p>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="55%">
+                                <source src="static/videos/sparse_T=40.mp4" type="video/mp4">
+                            </video>
+                            <p>Keyframes every 40 frames</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="55%">
+                                <source src="static/videos/sparse_K=4.mp4" type="video/mp4">
+                            </video>
+                            <p>Keyframes randomly placed at frames 35-40-80-140</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="hero is-small is-light">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="column is-centered has-text-centered">
+                    <h2 class="title is-3">Partial Keyframes</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            CondMDI supports partialkeyframes, allowing for joint control.
+                        </p>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="90%">
+                                <source src="static/videos/root.mp4" type="video/mp4">
+                            </video>
+                            <p>Conditioned on the root joint trajectory</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="90%">
+                                <source src="static/videos/vr_crosslegged.mp4" type="video/mp4">
+                            </video>
+                            <p>Conditioned on the trajectory of the head and two wrists</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="90%">
+                                <source src="static/videos/right_wrist.mp4" type="video/mp4">
+                            </video>
+                            <p>Conditioned on the right wrist trajectory</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="hero is-small is-light">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="column is-centered has-text-centered">
+                    <h2 class="title is-3">Text Conditioning</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            CondMDI allows for text prompts to be used as an additional condition to control the
+                            generated motions. As an example, we show the results of conditioning on the same root joint
+                            trajectory given different text prompts.
+                        </p>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                                <source src="static/videos/text_walking_cut.mp4" type="video/mp4">
+                            </video>
+                            <p>"a person is walking"</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                                <source src="static/videos/text_dancing_cut.mp4" type="video/mp4">
+                            </video>
+                            <p>"a person is dancing"</p>
+                        </div>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                                <source src="static/videos/text_exercising_cut.mp4" type="video/mp4">
+                            </video>
+                            <p>a person is exercising</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                                <source src="static/videos/text_waving_cut.mp4" type="video/mp4">
+                            </video>
+                            <p>a person is waving</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="column is-centered has-text-centered">
+                    <h2 class="title is-3">Comparisons</h2>
+                    <div class="content has-text-justified">
+                        <h3 class="title is-5">Ablations</h3>
+                        <p>
+                            Here, we show the comparison of CondMDI and inference-time imputation and reconstruction
+                            guidance methods on the task of keyframe in-betweening. Imputation alone ignores the
+                            keyframes and thus, the imputation results demonstrate high jumps over the keyframes.
+                            Reconstruction guidance improves the results of imputation by introducing cohesion between
+                            the generated motion and the keyframes but still demonstrates some jumpts over the
+                            keyframes. CondMDI outperforms both methods by generating high-quality and smooth motions.
+                        </p>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                                <source src="static/videos/ablation_impc1.mp4" type="video/mp4">
+                            </video>
+                            <p>Imputation - stop replacement at denoising step one</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                                <source src="static/videos/ablation_impc0.mp4" type="video/mp4">
+                            </video>
+                            <p>Imputation - replacement until last denoising step</p>
+                        </div>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                                <source src="static/videos/ablation_recguid.mp4" type="video/mp4">
+                            </video>
+                            <p>Reconstruction Guidance</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                                <source src="static/videos/ablation_condmdi.mp4" type="video/mp4">
+                            </video>
+                            <p>Ours</p>
+                        </div>
+                    </div>
+
+                    <div class="content has-text-justified">
+                        <h3 class="title is-5">Other Methods</h3>
+                        <p>
+                            <b>Root Joint Control. </b>Here, we compare CondMDI against SOTA diffusion-based methods on the root joint control
+                            task. Although CondMDI is designed for sparse keyframe in-betweening, it tracks the observed
+                            trajectory well and without much foot skate.
+                        </p>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="100%">
+                                <source src="static/videos/comp_root_mdm.mp4" type="video/mp4">
+                            </video>
+                            <p>MDM</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="100%">
+                                <source src="static/videos/comp_root_priormdm.mp4" type="video/mp4">
+                            </video>
+                            <p>PriorMDM</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="100%">
+                                <source src="static/videos/comp_root_gmd.mp4" type="video/mp4">
+                            </video>
+                            <p>GMD</p>
+                        </div>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="65%">
+                                <source src="static/videos/comp_root_omni.mp4" type="video/mp4">
+                            </video>
+                            <p>OmniControl</p>
+                        </div>
+                        <div class="column is-centered has-text-centered">
+                            <video poster="" id="tree" playsinline autoplay muted loop width="65%">
+                                <source src="static/videos/comp_root_condmdi.mp4" type="video/mp4">
+                            </video>
+                            <p>Ours</p>
+                        </div>
+                    </div>
+
+                    <p>
+                        <b>Sparse Keyframe In-betweening. </b>Here, we compare CondMDI against OmniControl on the sparse keyframe in-betweening task. OmniControl demonstrates foot skate and less adherence to the keyframes compared to our method.
+                    </p>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column is-centered has-text-centered">
+                        <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                            <source src="static/videos/comp_sparse_walk_omni.mp4" type="video/mp4">
+                        </video>
+                        <p>OmniControl</p>
+                    </div>
+                    <div class="column is-centered has-text-centered">
+                        <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                            <source src="static/videos/comp_sparse_walk_omni.mp4" type="video/mp4">
+                        </video>
+                        <p>Ours</p>
+                    </div>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column is-centered has-text-centered">
+                        <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                            <source src="static/videos/comp_sparse_dance_omni.mp4" type="video/mp4">
+                        </video>
+                        <p>OmniControl</p>
+                    </div>
+                    <div class="column is-centered has-text-centered">
+                        <video poster="" id="tree" playsinline autoplay muted loop width="75%">
+                            <source src="static/videos/comp_sparse_dance_omni.mp4" type="video/mp4">
+                        </video>
+                        <p>Ours</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+    <!-- BibTeX -->
+
+
+    <footer class="footer">
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <div class="content">
+                    <p>
+                        This website is licensed under a <a rel="license"
+                            href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                            Commons Attribution-ShareAlike 4.0 International License</a>.
+                    </p>
+                    <p>
+                        Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page.
+                        If
+                        you want to reuse their <a href="https://github.com/nerfies/nerfies.github.io">source code</a>,
+                        please credit them
+                        appropriately.
+                    </p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </footer>
+
+
+    <script type="text/javascript">
+        var sc_project = 12351448;
+        var sc_invisible = 1;
+        var sc_security = "c676de4f";
+    </script>
+    <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
+    <noscript>
+        <div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img
+                    class="statcounter" src="https://c.statcounter.com/12351448/0/c676de4f/1/" alt="Web Analytics"></a>
+        </div>
+    </noscript>
+    <!-- End of Statcounter Code -->
+
+</body>
+
+</html>
